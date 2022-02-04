@@ -18,9 +18,10 @@ RUN apt update && apt install -y \
 ENV Z88DK_PATH="/opt/z88dk" \
     SDCC_PATH="/tmp/sdcc"
 
-RUN git clone --depth 1 --branch v1.99c --recursive https://github.com/z88dk/z88dk.git ${Z88DK_PATH}
+RUN git clone --depth 1 --branch v2.1 --recursive https://github.com/z88dk/z88dk.git ${Z88DK_PATH}
 
 RUN cd ${Z88DK_PATH} \
+    && export BUILD_SDCC=1 \
     && ./build.sh \
     && rm -fR ${SDCC_PATH}
 
