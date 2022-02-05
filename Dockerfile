@@ -5,27 +5,28 @@
 
 FROM debian:buster
 
+ENV Z88DK_PATH="/opt/z88dk" \
+    SDCC_PATH="/tmp/sdcc" \
+    PATH="${Z88DK_PATH}/bin:${PATH}" \
+    ZCCCFG="${Z88DK_PATH}/lib/config/"
+
 RUN apt update && apt install -y \
         build-essential \
         git \
         subversion \
+        curl \
         libxml2-dev \
         bison \
         flex \
         libboost-all-dev \
-        texinfo
+        texinfo \
+        zlib1g-dev
 
-ENV Z88DK_PATH="/opt/z88dk" \
-    SDCC_PATH="/tmp/sdcc"
-
-RUN git clone --depth 1 --branch v2.1 --recursive https://github.com/z88dk/z88dk.git ${Z88DK_PATH}
-
-RUN cd ${Z88DK_PATH} \
+RUN git clone --depth 1 --branch v2.1 --recursive https://github.com/z88dk/z88dk.git ${Z88DK_PATH} \
+    && cd ${Z88DK_PATH} \
     && export BUILD_SDCC=1 \
+    && export BUILD_SDCC_HTTP=1 \
     && ./build.sh \
     && rm -fR ${SDCC_PATH}
-
-ENV PATH="${Z88DK_PATH}/bin:${PATH}" \
-    ZCCCFG="${Z88DK_PATH}/lib/config/"
 
 WORKDIR /src/
