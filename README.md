@@ -17,5 +17,5 @@ int main()
 ```
 
 ```bash
-docker run -v ${PWD}:/src/ -it steverobertson/z88dk zcc +zx -vn -create-app -clib=sdcc_iy -startup=0 hello.c -o hello
+docker run -v ${PWD}:/src/ -it ghcr.io/stever/z88dk zcc +zx -vn -create-app -clib=sdcc_iy -startup=0 hello.c -o hello
 ```
